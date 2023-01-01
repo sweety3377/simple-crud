@@ -1,0 +1,42 @@
+PUT http://localhost:80/api/create
+Content-Type: application/json
+
+{
+  "id": "id",
+  "name": "name",
+  "surname": "surname",
+  "lastname": "lastname",
+  "age": "age",
+  "weight": "weight",
+  "height": "height",
+}
+
+###
+POST http://localhost:80/api/read
+Accept: application/json
+
+{
+  "id": "id",
+}
+
+###
+PATCH http://localhost:80/api/update
+Accept: application/json
+
+{
+  "id": "id",
+  "name": "name",
+  "surname": "surname",
+  "lastname": "lastname",
+  "age": "age",
+  "weight": "weight",
+  "height": "height",
+}
+
+###
+DELETE http://localhost:80/api/delet
+Accept: application/json
+
+{
+  "id": "id",
+}
