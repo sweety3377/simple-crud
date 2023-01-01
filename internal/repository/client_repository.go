@@ -43,7 +43,7 @@ func (c ClientStorage) Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c ClientStorage) Read(w http.ResponseWriter, r *http.Request) {
-	var body model.GetClientByIdReq
+	var body model.GetClientRequest
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
@@ -63,10 +63,36 @@ func (c ClientStorage) Read(w http.ResponseWriter, r *http.Request) {
 	render.Respond(w, r, client)
 }
 
-func (c ClientStorage) Update(w http.ResponseWriter, r *http.Request) {}
+func (c ClientStorage) Update(w http.ResponseWriter, r *http.Request) {
+	var body model.Client
+	err := json.NewDecoder(r.Body).Decode(&body)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
+	}
+
+	sql, args, _ := sq.Update("clients").
+		Set("id", body.ID).
+		Set("name", body.Name).
+		Set("surname", body.Surname).
+		Set("lastname", body.Lastname).
+		Set("age", body.Age).
+		Set("height", body.Height).
+		Set("weight", body.Weight).
+		ToSql()
+
+	_, err = c.db.Exec(r.Context(), sql, args...)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
+	}
+
+	render.Status(r, http.StatusOK)
+	render.Respond(w, r, body)
+}
 
 func (c ClientStorage) Delete(w http.ResponseWriter, r *http.Request) {
-	var body model.GetClientByIdReq
+	var body model.GetClientRequest
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)

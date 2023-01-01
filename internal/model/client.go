@@ -10,7 +10,7 @@ type Client struct {
 	Height   uint8  `json:"height"`
 }
 
-type GetClientByIdReq struct {
+type GetClientRequest struct {
 	ID string `json:"id"`
 }
 
