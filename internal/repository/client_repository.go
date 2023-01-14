@@ -79,6 +79,7 @@ func (c ClientStorage) Update(w http.ResponseWriter, r *http.Request) {
 		Set("age", body.Age).
 		Set("height", body.Height).
 		Set("weight", body.Weight).
+		Where(sq.Eq{"id": body.ID}).
 		ToSql()
 
 	_, err = c.db.Exec(r.Context(), sql, args...)
