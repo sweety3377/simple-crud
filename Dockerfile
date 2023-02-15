@@ -5,6 +5,6 @@ WORKDIR /simple-crud
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o ./cmd ./cmd/server
+RUN go build -o ./server ./cmd/server && chmod +x ./cmd
 RUN echo "simple-crud service started"
 CMD ["/simple-crud/server/"]
